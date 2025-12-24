@@ -8,42 +8,33 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SelectRoleScreen(
-    onRoleSelected: (String) -> Unit
+    onRoleEntered: (String) -> Unit
 ) {
-    val roles = listOf(
-        "Android Developer",
-        "Frontend Developer",
-        "Backend Developer",
-        "Software Engineer"
-    )
-
-    var selectedRole by remember { mutableStateOf("") }
+    var role by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
         Text(
-            text = "Select Job Role",
+            text = "Enter Your Job Role",
             style = MaterialTheme.typography.headlineSmall
         )
 
-        roles.forEach { role ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(role)
-                RadioButton(
-                    selected = selectedRole == role,
-                    onClick = { selectedRole = role }
-                )
-            }
-        }
+        OutlinedTextField(
+            value = role,
+            onValueChange = { role = it },
+            label = { Text("e.g. Android Developer, Artist, Doctor") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         Button(
-            onClick = { onRoleSelected(selectedRole) },
-            enabled = selectedRole.isNotBlank(),
+            onClick = {
+                onRoleEntered(role.ifBlank { "Professional" })
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Generate Resume")

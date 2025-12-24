@@ -14,26 +14,63 @@ fun AddCertificateDialog(
     var title by remember { mutableStateOf("") }
     var platform by remember { mutableStateOf("") }
     var year by remember { mutableStateOf("") }
+    var driveLink by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            Button(onClick = {
-                if (title.isNotBlank()) {
-                    onSave(Certificate(title, platform, year))
-                    onDismiss()
+            Button(
+                onClick = {
+                    if (title.isNotBlank()) {
+                        onSave(
+                            Certificate(
+                                title = title,
+                                platform = platform,
+                                year = year,
+                                driveLink = driveLink
+                            )
+                        )
+                        onDismiss()
+                    }
                 }
-            }) { Text("Save") }
+            ) {
+                Text("Save")
+            }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
         },
         title = { Text("Add Certificate") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                OutlinedTextField(title, { title = it }, label = { Text("Title") })
-                OutlinedTextField(platform, { platform = it }, label = { Text("Platform") })
-                OutlinedTextField(year, { year = it }, label = { Text("Year") })
+
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    label = { Text("Title") }
+                )
+
+                OutlinedTextField(
+                    value = platform,
+                    onValueChange = { platform = it },
+                    label = { Text("Platform") }
+                )
+
+                OutlinedTextField(
+                    value = year,
+                    onValueChange = { year = it },
+                    label = { Text("Year") }
+                )
+
+                OutlinedTextField(
+                    value = driveLink,
+                    onValueChange = { driveLink = it },
+                    label = { Text("Drive / PDF Link") },
+                    placeholder = { Text("https://drive.google.com/...") },
+                    singleLine = true
+                )
             }
         }
     )

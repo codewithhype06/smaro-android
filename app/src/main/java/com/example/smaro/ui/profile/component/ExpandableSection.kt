@@ -1,9 +1,10 @@
 package com.example.smaro.ui.profile.component
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -15,21 +16,35 @@ fun ExpandableSection(
     var expanded by remember { mutableStateOf(false) }
 
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .animateContentSize(),
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
         onClick = { expanded = !expanded }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
 
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    text = if (expanded) "−" else "+",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(12.dp))
-                content()
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    content()
+                }
             }
         }
     }

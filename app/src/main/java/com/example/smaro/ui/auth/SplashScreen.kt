@@ -41,7 +41,7 @@ fun SplashScreen(
 
             // ✅ LOGO (balanced size)
             Image(
-                painter = painterResource(id = R.drawable.splash_logo),
+                painter = painterResource(id = R.drawable.appmainlogo),
                 contentDescription = "Smaro Logo",
                 modifier = Modifier
                     .size(350.dp)

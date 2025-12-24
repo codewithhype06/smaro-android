@@ -3,8 +3,12 @@ package com.example.smaro.data
 import com.example.smaro.model.Skill
 import com.example.smaro.model.Project
 import com.example.smaro.model.Internship
+import com.example.smaro.model.FocusPlan
+import java.util.UUID
 
 class FakeRepository {
+
+    /* ---------------- BASIC STATS ---------------- */
 
     fun getXP(): Int = 120
 
@@ -21,7 +25,8 @@ class FakeRepository {
         return "Deadlock occurs when each process holds a resource and waits for others."
     }
 
-    // 🧠 SKILLS DATA
+    /* ---------------- SKILLS ---------------- */
+
     fun getSkills(): List<Skill> {
         return listOf(
             Skill("Kotlin", "Intermediate"),
@@ -31,7 +36,8 @@ class FakeRepository {
         )
     }
 
-    // 💼 PROJECTS DATA
+    /* ---------------- PROJECTS ---------------- */
+
     fun getProjects(): List<Project> {
         return listOf(
             Project(
@@ -47,7 +53,8 @@ class FakeRepository {
         )
     }
 
-    // 🏢 INTERNSHIPS DATA ✅
+    /* ---------------- INTERNSHIPS ---------------- */
+
     fun getInternships(): List<Internship> {
         return listOf(
             Internship(
@@ -63,5 +70,32 @@ class FakeRepository {
                 description = "Built REST API integrations and improved app performance."
             )
         )
+    }
+
+    /* ================== 🎯 FOCUS PLANNER ================== */
+
+    // In-memory storage (app restart → data gone)
+    private var currentFocusPlan: FocusPlan? = null
+
+    fun saveFocusPlan(
+        topic: String,
+        startDateMillis: Long,
+        endDateMillis: Long
+    ) {
+        currentFocusPlan = FocusPlan(
+            id = UUID.randomUUID().toString(),
+            topic = topic,
+            startDateMillis = startDateMillis,
+            endDateMillis = endDateMillis,
+            createdAtMillis = System.currentTimeMillis()
+        )
+    }
+
+    fun getFocusPlan(): FocusPlan? {
+        return currentFocusPlan
+    }
+
+    fun clearFocusPlan() {
+        currentFocusPlan = null
     }
 }

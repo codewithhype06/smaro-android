@@ -7,8 +7,10 @@ import androidx.compose.material3.MaterialTheme
 import com.example.smaro.navigation.NavGraph
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MaterialTheme {
                 NavGraph()
